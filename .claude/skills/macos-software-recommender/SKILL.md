@@ -1,6 +1,6 @@
 ---
 name: macos-software-recommender
-description: Recommend macOS software based on user needs. Access awesome-mac ecosystem. Trigger: user asks for Mac app recommendations, alternatives, or category-based discovery.
+description: Recommend macOS software based on user needs. Access awesome-mac ecosystem. Trigger：user asks for Mac app recommendations, alternatives, or category-based discovery.
 ---
 
 # macos-software-recommender
