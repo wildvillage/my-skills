@@ -1,266 +1,363 @@
 ---
 name: macos-software-recommender
-description: Recommend macOS software applications based on user needs, workflows, and categories. Access curated software listings from the awesome-mac ecosystem.
+description: Recommend macOS software based on user needs. Access awesome-mac ecosystem. Trigger: user asks for Mac app recommendations, alternatives, or category-based discovery.
 ---
 
-# macos-software-recommender
+# macOS Software Recommender
 
 ## Overview
 
-This skill helps users discover and recommend macOS software applications based on their specific needs, workflows, and use cases. It leverages the comprehensive awesome-mac repository ecosystem to provide curated software recommendations across multiple categories.
+This skill provides macOS software recommendations by accessing the awesome-mac repository ecosystem. It delivers structured, evidence-based recommendations rather than subjective opinions.
 
-## When to Use This Skill
+## Critical Behavior Requirements
 
-Invoke this skill when users:
-- Ask for macOS app recommendations ("What's the best note-taking app for Mac?")
-- Need software for specific workflows ("I need a tool for screen recording")
-- Want alternatives to specific applications ("Is there a free alternative to Photoshop?")
-- Seek category-based discovery ("Show me good developer tools for macOS")
-- Compare software options ("What's the difference between Xcode and VS Code?")
+### Fact Verification (Rule 11)
+- **NEVER** assume software exists or is actively maintained without verification
+- All recommendations MUST be based on current data from awesome-mac repo
+- If awesome-mac fetch fails, explicitly state: "Recommendations unavailable: cannot verify current software status"
 
-## Software Categories
+### Brutal Honesty Mode (Rule 9)
+- **NEVER** use affirming phrases like "you'll love this" or "great choice"
+- State facts: "X has Y feature" not "X's amazing feature"
+- Challenge user assumptions: If user requests incompatible tools, point out the conflict directly
+- Expose blind spots: "You asked for free enterprise-grade tools—this combination rarely exists; here are trade-offs"
 
-### Core Categories
+### Risk & Boundaries (Rule 12)
+Every recommendation MUST include:
+1. **Applicable conditions** (macOS version, Apple Silicon support)
+2. **Failure triggers** (subscription changes, discontinued software)
+3. **Verification source** (awesome-mac last update date)
+4. **Known risks** (privacy concerns, resource usage)
 
-**Productivity & Writing**
-- Text Editors: Aurora Edit, CotEditor, Sublime Text, VS Code
-- Note-taking: Obsidian, Notion, Bear, Apple Notes
-- Office Suites: Microsoft 365, LibreOffice, OnlyOffice
-- Markdown Tools: Typora, MacDown, MarkText
+## Quick Start
 
-**Development Tools**
-- IDEs: Xcode, Android Studio, JetBrains Fleet
-- Developer Utilities: Postman, Insomnia, Charles Proxy
-- CLI Tools: iTerm2, Warp, Fig
-- Git Clients: GitHub Desktop, Fork, Sublime Merge
+1. Fetch latest awesome-mac data via web search or fetch
+2. Verify software status (active, abandoned, license type)
+3. Apply Brutal Honesty filters: remove subjective language, state trade-offs explicitly
+4. Output in Chinese (Simplified) unless user requests otherwise
 
-**Design & Creative**
-- Design Tools: Figma, Sketch, Adobe Creative Suite
-- Prototyping: Axure RP, ProtoPie
-- 3D Modeling: Blender, Cinema 4D
-- Image Editing: Pixelmator Pro, Affinity Photo
+## Workflows
 
-**Communication**
-- Collaboration: Slack, Discord, Microsoft Teams
-- Email Clients: Spark, Mailplane, Airmail
-- File Sharing: LocalSend, FileZilla, Cyberduck
+### Workflow 1: Category-Based Recommendation
 
-**Utilities**
-- Menu Bar Tools: Bartender, CleanMyMac, iStat Menus
-- File Organization: Alfred, Raycast, Hazel
-- Window Management: Rectangle, Magnet, BetterTouchTool
-- Productivity: Alfred, Raycast, Hazel
+**Trigger**: "推荐一些[类别]的软件" / "What are good [category] apps?"
 
-**Audio & Video**
-- Video Players: IINA, VLC, Movist
-- Music Players: Spotify, Apple Music, Vox
-- Audio Editing: Audacity, Adobe Audition
-- Screen Recording: CleanShot X, Kap, OBS Studio
-
-**Browsers**
-- Chrome-based: Arc, Chrome, Brave, Edge
-- Safari-based: Orion, SigmaOS
-- Privacy-focused: Tor Browser, LibreWolf
-
-**Security & Privacy**
-- Password Managers: 1Password, Bitwarden, Apple Keychain
-- VPNs: Mullvad, ExpressVPN, NordVPN
-- Encryption: VeraCrypt, Cryptomator
-
-## License Types
-
-Software entries may include license indicators:
-- **Open-Source Software**: Free and open source
-- **Freeware**: Free to use but closed source
-- **App Store Software**: Available on Mac App Store
-- **Awesome List**: Part of curated awesome lists
-
-## Recommendation Guidelines
-
-### Understanding User Needs
-
-1. **Identify the Use Case**: What specific problem does the user need to solve?
-2. **Consider the Workflow**: How will this fit into their existing workflow?
-3. **Assess Technical Level**: Match recommendations to user's technical expertise
-4. **Budget Awareness**: Consider free vs paid options
-5. **Integration Needs**: Check compatibility with existing tools
-
-### Structuring Recommendations
-
-Provide recommendations in this format:
+1. Fetch awesome-mac README for target category
+2. Filter by: active maintenance, macOS compatibility, license type
+3. Apply Brutal Honesty: state facts, no praise language
+4. Output format:
 
 ```markdown
-## Category: [Category Name]
+## 类别: [Category Name]
 
-Based on your needs, here are my recommendations:
+数据来源: awesome-mac (最后验证: [date])
 
-### Top Pick
-- **[App Name]** - [Brief description of why it's the top choice]
-  - License: [License type]
-  - Key Features: [3-5 bullet points]
-  - Best For: [Target user type]
+### 首选方案
+- **[App Name]** - [事实性描述]
+  - 授权: [License]
+  - 系统要求: [macOS version, Apple Silicon]
+  - 已知限制: [Limitations]
+  - 适用场景: [Use case]
+  - 风险提示: [Risks if any]
 
-### Alternative Options
+### 备选方案
 - **[App Name]** - [Description]
-  - License: [License type]
-  - Best For: [Specific use case]
+  - 授权: [License]
+  - 适用场景: [Use case]
 
-### Considerations
-- [Any important notes about compatibility, pricing, or limitations]
+### 边界条件
+- macOS 版本要求: [Specific versions]
+- Apple Silicon 原生支持: [Yes/No/Partial]
+- 定价模式: [One-time/Subscription/Free with limitations]
 ```
 
-### Comparison Framework
+### Workflow 2: Alternative Request
 
-When users ask for comparisons:
-1. **Feature Parity**: Compare core features side-by-side
-2. **Learning Curve**: Assess ease of use
-3. **Performance**: Consider resource usage
-4. **Ecosystem**: Integration with other tools
-5. **Cost**: Price comparison
+**Trigger**: "有什么免费的替代品" / "Free alternative to [app]?"
 
-## Common Workflow Patterns
+1. Identify core features of target app
+2. Fetch alternatives from awesome-mac
+3. Compare feature parity explicitly
+4. State trade-offs directly (free options often have limitations)
+5. Output format:
 
-### For Developers
-- Terminal + IDE + Git client + API testing tool
-- Example: iTerm2 + VS Code + GitHub Desktop + Postman
+```markdown
+## 替代方案分析
 
-### For Writers
-- Distraction-free editor + Note-taking + Reference manager
-- Example: Ulysses + Notion + Zotero
+目标应用: [App Name] - [Core features identified]
 
-### For Designers
-- Design tool + Prototyping + Asset management
-- Example: Figma + Sketch + CleanShot X
+### 替代选项
+- **[Alternative 1]** - [Feature comparison]
+  - 功能对等性: [Full/Partial/None]
+  - 主要差异: [Specific gaps]
+  - 权衡取舍: [What you gain vs lose]
 
-### For Productivity
-- Launcher + Window manager + Clipboard manager + Automation
-- Example: Raycast + Rectangle + Maccy + Keyboard Maestro
+### 根因验证
+你寻找免费替代品的原因是 [inferred reason]。注意: [reality check if free option can actually meet needs].
 
-## Research Process
+### 风险说明
+- [Specific risks of choosing alternative]
+- [Migration difficulties if any]
+```
 
-When searching for recommendations:
+### Workflow 3: Workflow-Based Recommendation
 
-1. **Query Formulation**: Use specific category and feature keywords
-2. **Multiple Options**: Provide 2-4 alternatives per category
-3. **License Diversity**: Include both free and paid options
-4. **Recent Updates**: Prioritize actively maintained software
-5. **Community Feedback**: Consider user ratings and reviews
+**Trigger**: "我需要做[某项工作]的工具" / "Tools for [workflow]?"
 
-## Limitations
+1. Ask clarifying questions if needs vague (Rule 13):
+   - 具体使用场景?
+   - 预算范围?
+   - 技术水平?
+   - 必须具备的功能 vs 锦上添花?
+2. Verify workflow assumptions against awesome-mac categories
+3. Challenge incompatible requirements directly
+4. Output complete stack with integration notes
 
-- Software availability may vary by region
-- App Store versions may differ from direct downloads
-- Some software may require macOS version compatibility
-- Pricing and features subject to change
-- Not all software may be actively maintained
+### Workflow 4: Comparison Request
 
-## Output Language Rule
+**Trigger**: "X 和 Y 有什么区别" / "Difference between X and Y?"
 
-**IMPORTANT**: All recommendations and responses from this skill MUST be output in **Chinese (Simplified)** unless the user explicitly requests another language.
+1. Fetch both apps from awesome-mac
+2. Compare: features, license, resource usage, learning curve
+3. State objective differences only
+4. Avoid subjective judgments like "better" or "worse"
+5. Output:
 
-## Real-time Data Fetching
+```markdown
+## 对比分析
 
-**CRITICAL**: To ensure information accuracy and timeliness, ALWAYS perform the following steps before providing recommendations:
+### 功能对比
+| 特性 | [App 1] | [App 2] |
+|------|---------|---------|
+| [Feature 1] | [Status] | [Status] |
 
-1. **Fetch Latest Data**: Use WebFetch or WebSearch to access the awesome-mac repository at `https://github.com/jaywcjlove/awesome-mac` or its README
-2. **Verify Current Information**: Cross-check software names, descriptions, and license types against the fetched data
-3. **Prioritize Active Projects**: Favor software that shows recent updates and active maintenance
+### 客观差异
+- 学习曲线: [App 1] 需要 [time/effort], [App 2] 需要 [time/effort]
+- 资源占用: [App 1] [usage], [App 2] [usage]
+- 生态系统: [Integration differences]
 
-This ensures recommendations are based on the most current software ecosystem rather than static cached information.
+### 适用场景
+- 选择 [App 1] 如果: [Specific condition]
+- 选择 [App 2] 如果: [Specific condition]
+
+### 无主观推荐
+不存在"更好"的选择，取决于你的 [specific factor].
+```
 
 ## Best Practices
 
-1. **Ask Clarifying Questions**: When user needs are vague, ask about:
-   - Specific use cases or workflows
-   - Budget constraints
-   - Technical expertise level
-   - Integration requirements
-   - Must-have vs nice-to-have features
+### Do's
+- Fetch latest data before recommending
+- State software status: active, abandoned, unknown
+- Use simple language in comments (Rule 4)
+- Output in Chinese by default
+- Include risk/boundary sections
+- Challenge user assumptions when needed
 
-2. **Provide Context**: Explain why each recommendation fits their needs
+### Don'ts
+- Never say "great choice" or "you'll love it"
+- Never assume software exists without verification
+- Never hide trade-offs or limitations
+- Never use emoji (Rule 2)
+- Never recommend based on outdated data
 
-3. **Mention Alternatives**: Always provide backup options
+## Error Handling
 
-4. **Stay Current**: Software landscape changes rapidly; prioritize recently updated apps
+### When awesome-mac fetch fails
+```markdown
+无法获取最新软件数据。
 
-5. **Respect Preferences**: Honor user's stated preferences (open-source, App Store, etc.)
+当前状态:
+- awesome-mac 访问失败
+- 无法验证软件维护状态
+- 无法确认最新功能
 
-## Example Interactions
+选项:
+1. 稍后重试
+2. 提供具体的软件名称，我针对性查询
+3. 访问 https://github.com/jaywcjlove/awesome-mac 手动查阅
+```
 
-### Example 1: General Recommendation
-**User**: "What's a good note-taking app for Mac?"
+### When requirements are incomplete (Rule 13)
+```markdown
+需求信息不完整，无法提供准确推荐。
+
+缺失信息:
+1. [Missing detail 1]
+2. [Missing detail 2]
+3. [Missing detail 3]
+
+请补充以上信息，或从以下路径选择:
+- 路径 A: [Description + 适用条件]
+- 路径 B: [Description + 适用条件]
+```
+
+### When request is unrealistic
+```markdown
+你的需求存在矛盾:
+- 要求: [Conflicting requirements 1]
+- 要求: [Conflicting requirements 2]
+
+现实情况:
+[Explanation of why these don't coexist]
+
+可行方案:
+1. [Compromise option with trade-offs]
+2. [Alternative approach]
+```
+
+## Categories Reference
+
+Fetch current categories from awesome-mac. Common categories include:
+
+**Productivity & Writing**
+- Text Editors, Note-taking, Office Suites, Markdown Tools
+
+**Development Tools**
+- IDEs, Developer Utilities, CLI Tools, Git Clients
+
+**Design & Creative**
+- Design Tools, Prototyping, 3D Modeling, Image Editing
+
+**Communication**
+- Collaboration, Email Clients, File Sharing
+
+**Utilities**
+- Menu Bar Tools, File Organization, Window Management
+
+**Audio & Video**
+- Video Players, Music Players, Audio Editing, Screen Recording
+
+**Browsers**
+- Chrome-based, Safari-based, Privacy-focused
+
+**Security & Privacy**
+- Password Managers, VPNs, Encryption
+
+## License Types
+
+- **Open-Source**: Free and open source
+- **Freeware**: Free to use, closed source
+- **App Store**: Available on Mac App Store
+- **Commercial**: Paid software
+- **Subscription**: Recurring payment
+
+## Validation Checklist
+
+Before outputting recommendations:
+- [ ] awesome-mac data fetched and timestamped
+- [ ] Software status verified (active/abandoned)
+- [ ] No subjective/praise language used
+- [ ] Risk/boundary section included
+- [ ] Trade-offs stated explicitly
+- [ ] Chinese language output (unless requested otherwise)
+- [ ] Conflicting assumptions challenged
+
+## Examples
+
+### Example 1: Brutal Honesty Applied
+
+**User**: "推荐一个最好的笔记软件"
 
 **Response**:
 ```markdown
-Based on general note-taking needs, here are my top recommendations:
+## 笔记软件推荐
 
-### Top Pick: Obsidian
-- **Why**: Extremely flexible, markdown-based, local-first storage
-- **License**: Free (personal use), paid sync available
-- **Best For**: Power users who want control over their notes
+数据来源: awesome-mac (最后验证: 2025-01-22)
 
-### Alternative Options
-- **Notion**: All-in-one workspace with databases and collaboration
-- **Bear**: Beautiful, simple markdown editor with excellent iOS sync
-- **Apple Notes**: Free, built-in, great for casual users
+### 现实检查
+不存在"最好的"笔记软件。选择取决于你的具体需求。
 
-### Choosing Guide
-- Choose Obsidian if you want customization and local storage
-- Choose Notion for team collaboration and databases
-- Choose Bear for simplicity and design
-- Choose Apple Notes for zero-setup convenience
+### 按需求分类
+
+**如果需要本地存储 + 高度可定制**
+- **Obsidian** - Markdown 本地知识库
+  - 授权: 免费(个人使用)
+  - 系统要求: macOS 10.13+, Apple Silicon 原生
+  - 权衡取舍: 需要时间学习，但数据完全可控
+  - 风险: 插件生态质量参差不齐
+
+**如果需要协作 + 数据库功能**
+- **Notion** - 一体化工作区
+  - 授权: 免费套餐有限制
+  - 系统要求: 需要网络连接
+  - 权衡取舍: 功能强大但启动较慢，离线功能受限
+  - 风险: 数据存储在云端，服务中断时无法访问
+
+**如果需要简单 + 美观**
+- **Bear** - Markdown 编辑器
+  - 授权: 免费套餐有限制，Pro 订阅制
+  - 系统要求: macOS 11+, 仅限 Apple 生态
+  - 权衡取舍: 简单易用但功能相对简单
+  - 风险: 数据锁定在 Apple 生态
+
+### 边界条件
+- 所有应用都支持导出(验证过)
+- Apple Silicon 支持均已完成
+- 云端同步需要额外付费或有容量限制
+
+### 你的下一步
+明确你的优先级: 本地存储/协作/简单美观，二选一。
 ```
 
-### Example 2: Specific Workflow
-**User**: "I need tools for web development"
+### Example 2: Challenging Assumptions
+
+**User**: "我需要一个免费的、企业级的、无限制的 VPN"
 
 **Response**:
 ```markdown
-Here's a complete web development toolkit for macOS:
+## 需求分析
 
-### Core Development
-- **VS Code** - Feature-rich extensible editor (Free)
-- **iTerm2** - Powerful terminal replacement (Free)
-- **GitHub Desktop** - Git GUI client (Free)
+你的需求存在矛盾:
 
-### API & Testing
-- **Postman** - API development and testing (Free)
-- **Charles Proxy** - HTTP debugging (Paid)
+现实情况:
+- 免费 VPN 靠出售用户数据盈利
+- 企业级需要高可用性和 SLA 保证，这需要成本
+- 无限制会吸引滥用，导致服务不稳定
 
-### Browser DevTools
-- **Arc** - Modern browser with excellent dev tools (Free)
-- **Chrome** - Standard for web development (Free)
+可行路径:
 
-This setup covers editing, terminal operations, version control, API testing, and browser debugging.
+**路径 A: 接受付费企业方案**
+- Mullvad VPN - 隐私优先，固定定价
+  - 授权: 5欧元/月
+  - 适用场景: 愿意为隐私付费
+
+**路径 B: 使用免费方案接受限制**
+- ProtonVPN Free - 免费但有速度和服务器限制
+  - 授权: 免费
+  - 权衡取舍: 速度受限，服务器数量少
+  - 风险: 高峰时段可能拥堵
+
+### 建议
+如果"企业级"是必须的，付费是唯一可行路径。免费方案无法提供企业级保证。
 ```
 
-### Example 3: Alternative Request
-**User**: "Free alternative to Photoshop?"
+### Example 3: Vague Request - Rule 13
+
+**User**: "推荐一些开发工具"
 
 **Response**:
 ```markdown
-Here are free alternatives to Adobe Photoshop for macOS:
+## 需求信息不完整
 
-### Top Pick: Photopea
-- **Why**: Browser-based PS clone with similar interface
-- **License**: Free (ad-supported) or paid
-- **Capability**: Supports PSD files and most PS features
+缺失关键信息:
+1. **开发类型**: Web/移动端/后端/桌面?
+2. **主要语言**: JavaScript/Python/Swift/其他?
+3. **预算**: 免费优先还是接受付费?
+4. **现有工具栈**: 已使用什么工具?
 
-### Desktop Options
-- **GIMP** - Full-featured open-source image editor
-- **Krita** - Specialized for digital art and painting
-- **Photopea** - Runs in browser, no installation needed
+如果你无法提供完整信息，以下是通用选项:
 
-### Considerations
-- Photopea requires internet connection
-- GIMP has steeper learning curve
-- Krita is better for illustration than photo editing
+**通用开发基础套装**
+- VS Code (编辑器) + iTerm2 (终端) + GitHub Desktop (Git)
+- 适用场景: 大多数开发工作
+- 成本: 全部免费
+- 风险: 可能无法满足特定语言/框架需求
+
+请补充上述信息以获得精准推荐。
 ```
 
-## Continuous Learning
+## References
 
-The macOS software ecosystem evolves constantly. When providing recommendations:
-- Check software update recency
-- Verify macOS version compatibility
-- Consider Apple Silicon (M1/M2/M3) optimization
-- Note any major UI/UX changes in recent versions
+- awesome-mac: https://github.com/jaywcjlove/awesome-mac
+- Verify data via WebSearch/WebFetch before each recommendation session
