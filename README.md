@@ -19,6 +19,7 @@ my-skills/
 | Skill | 说明 |
 |-------|------|
 | [skill-generator](.agent/skills/skill-generator/) | 从 GitHub 项目、文章、SOP 或流程描述生成新的 Agent Skills |
+| [macos-software-recommender](.agent/skills/macos-software-recommender/) | 基于 awesome-mac 生态系统推荐 macOS 软件应用 |
 
 ---
 
