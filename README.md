@@ -18,9 +18,9 @@ my-skills/
 
 | Skill | 说明 |
 |-------|------|
-| [skill-generator](.agent/skills/skill-generator/SKILL.md) | 从 GitHub 项目、文章、SOP 或流程描述生成新的 Agent Skills |
-| [macos-software-recommender](.agent/skills/macos-software-recommender/SKILL.md) | 基于 awesome-mac 生态系统推荐 macOS 软件应用 |
+| [skill-creator](.agent/skills/skill-creator/SKILL.md) | 从 GitHub 项目、文章、SOP 或流程描述生成新的 Agent Skills |
+| [macos-software-recommender](.agent/skills/macos-software-recommender/SKILL.md) | 基于 awesome-mac 推荐 macOS 软件，采用残酷诚实模式：陈述事实而非主观评价、验证所有软件状态、明确风险边界与取舍 |
 
 ---
 
-*使用 skill-generator 创建新 skill 时，此表格会自动更新*
+*使用 skill-creator 创建新 skill 时，此表格会自动更新*
