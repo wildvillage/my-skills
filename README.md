@@ -2,6 +2,8 @@
 
 Agent Skills 收集库。
 
+参考[Anthropics官方skills集合](https://github.com/anthropics/skills)
+
 ## 项目结构
 
 ```
